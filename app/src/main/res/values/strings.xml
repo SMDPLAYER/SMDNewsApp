@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsApp</string>
+    <string name="app_name">SMD NewsApp</string>
 
     <string name="hint_search">Search…</string>
     <string name="daily_news">For You</string>
