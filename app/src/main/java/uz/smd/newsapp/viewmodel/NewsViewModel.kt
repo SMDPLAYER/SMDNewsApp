@@ -98,7 +98,13 @@ class NewsViewModel @Inject constructor(
 //                newsData.postValue(Resource.Error("No Internet Connection"))
 //                toast(getApplication(), "No Internet Connection.!")
 //            }
-        } catch (t: Throwable) {
+        }catch (e:Exception){
+            newsData.postValue(
+                Resource.Error(
+                    e.message?:"Limited requests need to upgrade developer account"
+                ))
+        }
+        catch (t: Throwable) {
             when (t) {
                 is IOException -> newsData.postValue(
                     Resource.Error(
@@ -124,6 +130,11 @@ class NewsViewModel @Inject constructor(
 //                newsData.postValue(Resource.Error("No Internet Connection"))
 //                toast(getApplication(), "No Internet Connection.!")
 //            }
+        }catch (e:Exception){
+            newsData.postValue(
+                Resource.Error(
+                    e.message?:"Limited requests need to upgrade developer account"
+                ))
         } catch (t: Throwable) {
             when (t) {
                 is IOException -> newsData.postValue(
@@ -150,6 +161,11 @@ class NewsViewModel @Inject constructor(
 //                newsData.postValue(Resource.Error("No Internet Connection"))
 //                toast(getApplication(), "No Internet Connection.!")
 //            }
+        }catch (e:Exception){
+            newsData.postValue(
+                Resource.Error(
+                    e.message?:"Limited requests need to upgrade developer account"
+                ))
         } catch (t: Throwable) {
             when (t) {
                 is IOException -> newsData.postValue(
@@ -195,6 +211,11 @@ class NewsViewModel @Inject constructor(
 //                newsSourcesData.postValue(Resource.Error("No Internet Connection"))
 //                toast(getApplication(), "No Internet Connection.!")
 //            }
+        }catch (e:Exception){
+            newsData.postValue(
+                Resource.Error(
+                    e.message?:"Limited requests need to upgrade developer account"
+                ))
         } catch (t: Throwable) {
             when (t) {
                 is IOException -> newsSourcesData.postValue(
