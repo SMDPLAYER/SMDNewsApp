@@ -9,12 +9,21 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 import uz.smd.newsapp.R
+import uz.smd.newsapp.storage.UIModeDataStore
 import uz.smd.newsapp.utils.toast
 import uz.smd.newsapp.view.main.MainActivity
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
+    @Inject
+    lateinit var uiModeDataStore: UIModeDataStore
 
     var _emailText: EditText? = null
     var _passwordText: EditText? = null
@@ -24,7 +33,11 @@ class LoginActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        lifecycleScope.launch {
+            if (uiModeDataStore.isLogged.first() ){
+                onLoginSuccess()
+            }
+        }
         _loginButton = findViewById(R.id.btn_login) as Button
         _signupLink = findViewById(R.id.link_signup) as TextView
         _passwordText = findViewById(R.id.input_password) as EditText
@@ -90,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
 
     fun onLoginSuccess() {
         _loginButton!!.isEnabled = true
-//        finish()
+        finish()
         startActivity(Intent(this, MainActivity::class.java))
     }
 

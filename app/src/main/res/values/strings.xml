@@ -13,4 +13,13 @@
         and try to talk their way out of it as they don\'t wish to reveal that they.</string>
     <string name="save_news">Save news</string>
     <string name="share_news">Share</string>
+
+    <string name="top_headlines">Top Headlines</string>
+    <string name="browse">Browse</string>
+    <string name="share">Share</string>
+    <string name="save">Read later</string>
+    <string name="listen">Listen</string>
+    <string name="internet_warming">Check your Internet Connection and Try Again!</string>
+    <string name="news_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+
 </resources>

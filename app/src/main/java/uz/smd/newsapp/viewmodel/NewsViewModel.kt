@@ -24,11 +24,15 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsViewModel @Inject constructor(
     application: Application,
-    private val repository: NewsRepository
+    private val repository: NewsRepository,
+    private val uiModeDataStore: UIModeDataStore
 ) : AndroidViewModel(application) {
 
-    private val uiModeDataStore = UIModeDataStore(application)
-
+    fun setLogged(){
+        viewModelScope.launch {
+            uiModeDataStore.setLogged(true)
+        }
+    }
     // get ui mode
     val getUIMode = uiModeDataStore.uiMode
 
@@ -54,7 +58,8 @@ class NewsViewModel @Inject constructor(
         getNews()
     }
 
-    fun insertNews( news: Article) {
+    fun insertNews( news: Article?) {
+        if (news!=null)
         repository.insertNews(news.toNewsModel())
     }
 

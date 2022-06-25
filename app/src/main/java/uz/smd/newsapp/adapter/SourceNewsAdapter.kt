@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import uz.smd.newsapp.databinding.ItemsSourceNewsBinding
 import uz.smd.newsapp.response.SourcesNews
+import uz.smd.newsapp.view.main.MainActivity
 
 
 class SourceNewsAdapter(private val context: Context) :
@@ -64,6 +65,7 @@ class SourceNewsAdapter(private val context: Context) :
                 itemsSourceNewsBinding.executePendingBindings()
 
                 itemsSourceNewsBinding.root.setOnClickListener {
+//                    MainActivity.openReadNews.value=(articleResponse)
                     val builder = CustomTabsIntent.Builder()
                     val customTabsIntent = builder.build()
                     customTabsIntent.launchUrl(context, Uri.parse(sourceResponse.url))

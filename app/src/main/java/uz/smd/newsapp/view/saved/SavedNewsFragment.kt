@@ -34,6 +34,10 @@ class SavedNewsFragment : BaseFragment<FragmentSavedNewsBinding, NewsViewModel>(
             newsAdapter?.differ?.submitList(list)
         }
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvSavednews.adapter=null
+    }
 
     override fun getViewBinding(
         inflater: LayoutInflater,

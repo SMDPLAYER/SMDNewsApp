@@ -46,6 +46,7 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding, NewsViewModel
     private fun inistview() = with(binding) {
         newsAdapter = NewsAdapter(requireContext()){
             viewModel.insertNews(it)
+            toast("News Saved")
         }
         rv_SearchNews.apply {
             adapter = newsAdapter
@@ -112,7 +113,10 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding, NewsViewModel
         progressBar_searchnews.visibility = View.INVISIBLE
         isLoading = false
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvSearchNews.adapter=null
+    }
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

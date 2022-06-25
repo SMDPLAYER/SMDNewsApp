@@ -1,10 +1,12 @@
 package uz.smd.newsapp.view.main
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,6 +16,8 @@ import uz.smd.newsapp.databinding.ActivityMainBinding
 import uz.smd.newsapp.viewmodel.NewsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import uz.smd.newsapp.response.Article
+import uz.smd.newsapp.view.read.ReadNewsActivity
 
 
 @AndroidEntryPoint
@@ -23,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_NewsApp)
         super.onCreate(savedInstanceState)
+        newsViewModel.setLogged()
 
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -50,6 +55,15 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController,appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        openReadNews.observe(this){
+            if (it!=null){
+                val readIntent= Intent(this, ReadNewsActivity::class.java)
+                readIntent.putExtra(NEWS_ARTICLE,it)
+                startActivity(readIntent)
+                openReadNews.value = null
+            }
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -59,6 +73,11 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object{
+        val openReadNews = MutableLiveData<Article?>()
+        const val NEWS_ARTICLE = "news_article"
     }
 
 

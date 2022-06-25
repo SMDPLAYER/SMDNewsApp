@@ -10,11 +10,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
+import dagger.hilt.android.AndroidEntryPoint
 import uz.smd.newsapp.R
+import uz.smd.newsapp.storage.UIModeDataStore
 import uz.smd.newsapp.utils.toast
 import uz.smd.newsapp.view.main.MainActivity
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SignupActivity : AppCompatActivity() {
 var _nameText: EditText? = null
     var _addressText: EditText? = null

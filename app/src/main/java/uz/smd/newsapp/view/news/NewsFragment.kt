@@ -36,6 +36,7 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>() {
     private fun initsview() = with(binding) {
         newsAdapter = NewsAdapter(requireContext()){
             viewModel.insertNews(it)
+            toast("News Saved")
         }
         rvNews.apply {
             setHasFixedSize(true)
@@ -131,6 +132,11 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>() {
             viewModel.saveToDataStore(false)
             item.setIcon(R.drawable.ic_day)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvNews.adapter=null
     }
 
     override fun getViewBinding(

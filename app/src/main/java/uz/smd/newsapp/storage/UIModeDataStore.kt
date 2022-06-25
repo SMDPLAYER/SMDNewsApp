@@ -31,6 +31,18 @@ class UIModeDataStore(context: Context) :
     ),
     UIModeImpl {
 
+    val isLogged:Flow<Boolean>
+        get() = dataStore.data.map { preferences ->
+            val uiMode = preferences[IS_LOGGED] ?: false
+            uiMode
+        }
+
+   suspend fun setLogged(isLogged:Boolean){
+        dataStore.edit { preferences ->
+            preferences[IS_LOGGED] = isLogged
+        }
+    }
+
     // used to get the data from datastore
     override val uiMode: Flow<Boolean>
         get() = dataStore.data.map { preferences ->
@@ -48,6 +60,7 @@ class UIModeDataStore(context: Context) :
     companion object {
         private const val PREF_FILE_UI_MODE = "ui_mode_preference"
         private val UI_MODE_KEY = booleanPreferencesKey("ui_mode")
+        private val IS_LOGGED = booleanPreferencesKey("is_logged")
     }
 }
 

@@ -49,6 +49,7 @@ class HeadLinesNewsFragment : BaseFragment<FragmentHeadlinesNewsBinding, NewsVie
 
         newsAdapter = NewsAdapter(requireContext()){
             viewModel.insertNews(it)
+            toast("News Saved")
         }
         rvHeadlinesnews.apply {
             setHasFixedSize(true)
@@ -94,6 +95,11 @@ class HeadLinesNewsFragment : BaseFragment<FragmentHeadlinesNewsBinding, NewsVie
     private fun progressBarStatus(status: Boolean) {
         progressBar_headlinenews.visibility = if (status) View.VISIBLE else View.GONE
 
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvHeadlinesnews.adapter=null
+        binding.rvCategories.adapter=null
     }
 
     override fun getViewBinding(

@@ -61,7 +61,10 @@ class SourcesNewsFragment : BaseFragment<FragmentSourcesNewsBinding, NewsViewMod
         progressbar_sources.visibility = if (status) View.VISIBLE else View.GONE
 
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvSourcenews.adapter=null
+    }
     override fun getViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?

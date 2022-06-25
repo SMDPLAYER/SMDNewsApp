@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import uz.smd.newsapp.databinding.ItemsNewsBinding
 import uz.smd.newsapp.response.Article
+import uz.smd.newsapp.view.main.MainActivity
 
 class NewsAdapter(private val context: Context,val block:(Article)->Unit) :
     RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
@@ -76,15 +77,17 @@ class NewsAdapter(private val context: Context,val block:(Article)->Unit) :
                 }
 
                 ivGotoNews.setOnClickListener {
-                    val builder = CustomTabsIntent.Builder()
-                    val customTabsIntent = builder.build()
-                    customTabsIntent.launchUrl(context, Uri.parse(articleResponse.url))
+                    MainActivity.openReadNews.value=(articleResponse)
+//                    val builder = CustomTabsIntent.Builder()
+//                    val customTabsIntent = builder.build()
+//                    customTabsIntent.launchUrl(context, Uri.parse(articleResponse.url))
                 }
 
                 itemsNewsBinding.root.setOnClickListener {
-                    val builder = CustomTabsIntent.Builder()
-                    val customTabsIntent = builder.build()
-                    customTabsIntent.launchUrl(context, Uri.parse(articleResponse.url))
+                    MainActivity.openReadNews.value=(articleResponse)
+//                    val builder = CustomTabsIntent.Builder()
+//                    val customTabsIntent = builder.build()
+//                    customTabsIntent.launchUrl(context, Uri.parse(articleResponse.url))
                 }
 
 
