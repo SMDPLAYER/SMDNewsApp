@@ -1,4 +1,5 @@
 package uz.smd.newsapp.auth
+
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,15 +18,16 @@ import kotlinx.coroutines.launch
 
 import uz.smd.newsapp.R
 import uz.smd.newsapp.storage.UIModeDataStore
+import uz.smd.newsapp.storage.room.NewsDatabase
 import uz.smd.newsapp.utils.toast
 import uz.smd.newsapp.view.main.MainActivity
+import uz.smd.newsapp.viewmodel.NewsViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-    @Inject
-    lateinit var uiModeDataStore: UIModeDataStore
 
+    private val viewModel: AuthViewModel by viewModels()
     var _emailText: EditText? = null
     var _passwordText: EditText? = null
     var _loginButton: Button? = null
@@ -33,10 +36,8 @@ class LoginActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        lifecycleScope.launch {
-            if (uiModeDataStore.isLogged.first() ){
-                onLoginSuccess()
-            }
+        viewModel.isLogged{
+            onLoginSuccess()
         }
         _loginButton = findViewById(R.id.btn_login) as Button
         _signupLink = findViewById(R.id.link_signup) as TextView
@@ -63,22 +64,29 @@ class LoginActivity : AppCompatActivity() {
 
         _loginButton!!.isEnabled = false
 
-        toast(this,"Login...")
+
 //        val progressDialog = ProgressDialog(this@LoginActivity,
 //                R.style.AppTheme_Dark_Dialog)
 //        progressDialog.isIndeterminate = true
 //        progressDialog.setMessage("Login...")
 //        progressDialog.show()
 
+
         val email = _emailText!!.text.toString()
         val password = _passwordText!!.text.toString()
+        viewModel.getUsers(email,password,{error->
+            toast(this, error)
+        }){
+            toast(this, "Login...")
+            onLoginSuccess()
+        }
+
 
         // TODO: Implement your own authentication logic here.
 
 //        android.os.Handler().postDelayed(
 //                {
 //                    // On complete call either onLoginSuccess or onLoginFailed
-                    onLoginSuccess()
 //                    // onLoginFailed();
 //                    progressDialog.dismiss()
 //                }, 3000)

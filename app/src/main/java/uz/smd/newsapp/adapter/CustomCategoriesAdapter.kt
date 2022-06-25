@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.items_category_card.view.*
 class CategoriesAdapter(private val categories: List<String>) :
     RecyclerView.Adapter<uz.smd.newsapp.adapter.CategoryViewHolder>() {
 
-    private var selectedPosition: Int = 0
+     var selectedPosition: Int = 1
 
     private var onItemClickListener: ((String) -> Unit)? = null
 

@@ -8,18 +8,24 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import dagger.hilt.android.AndroidEntryPoint
 import uz.smd.newsapp.R
 import uz.smd.newsapp.storage.UIModeDataStore
+import uz.smd.newsapp.storage.room.NewsDatabase
+import uz.smd.newsapp.storage.room.UserModel
 import uz.smd.newsapp.utils.toast
 import uz.smd.newsapp.view.main.MainActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignupActivity : AppCompatActivity() {
-var _nameText: EditText? = null
+
+    private val newsViewModel: AuthViewModel by viewModels()
+
+    var _nameText: EditText? = null
     var _addressText: EditText? = null
     var _emailText: EditText? = null
     var _mobileText: EditText? = null
@@ -62,8 +68,7 @@ var _nameText: EditText? = null
         }
 
         _signupButton!!.isEnabled = false
-
-        toast(this,"Creating Account...")
+        toast(this, "Creating Account...")
 //        val progressDialog = ProgressDialog(this@SignupActivity,
 //                R.style.AppTheme_Dark_Dialog)
 //        progressDialog.isIndeterminate = true
@@ -78,12 +83,19 @@ var _nameText: EditText? = null
         val reEnterPassword = _reEnterPasswordText!!.text.toString()
 
         // TODO: Implement your own signup logic here.
+        newsViewModel.insertUser(  UserModel(
+            email = email,
+            name = name,
+            address = address,
+            mobile = mobile,
+            password = password
+        ))
 
 //        android.os.Handler().postDelayed(
 //                {
 //                    // On complete call either onSignupSuccess or onSignupFailed
 //                    // depending on success
-                    onSignupSuccess()
+        onSignupSuccess()
 //                    // onSignupFailed();
 //                    progressDialog.dismiss()
 //                }, 3000)
@@ -136,7 +148,7 @@ var _nameText: EditText? = null
             _emailText!!.error = null
         }
 
-        if (mobile.isEmpty() || mobile.length != 10) {
+        if (mobile.isEmpty() || mobile.length < 7) {
             _mobileText!!.error = "Enter Valid Mobile Number"
             valid = false
         } else {

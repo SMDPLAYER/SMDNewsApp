@@ -33,6 +33,7 @@ class HeadLinesNewsFragment : BaseFragment<FragmentHeadlinesNewsBinding, NewsVie
     }
 
     private fun initCategoriesRv() {
+        viewModel.getHeadlinesNews(categories.getOrNull(1)?:"")
         categoriesAdapter = uz.smd.newsapp.adapter.CategoriesAdapter(categories)
         categoriesAdapter.onItemClickListener {
             viewModel.getHeadlinesNews(it)
@@ -46,6 +47,9 @@ class HeadLinesNewsFragment : BaseFragment<FragmentHeadlinesNewsBinding, NewsVie
     }
 
     private fun initsview() = with(binding) {
+        tryAgainButtonHeadlinenews.setOnClickListener {
+            viewModel.getHeadlinesNews(categories.getOrNull(categoriesAdapter.selectedPosition)?:"")
+        }
 
         newsAdapter = NewsAdapter(requireContext()){
             viewModel.insertNews(it)
