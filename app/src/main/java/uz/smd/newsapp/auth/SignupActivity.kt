@@ -148,7 +148,7 @@ class SignupActivity : AppCompatActivity() {
             _emailText!!.error = null
         }
 
-        if (mobile.isEmpty() || mobile.length < 7) {
+        if (mobile.isEmpty()) {
             _mobileText!!.error = "Enter Valid Mobile Number"
             valid = false
         } else {

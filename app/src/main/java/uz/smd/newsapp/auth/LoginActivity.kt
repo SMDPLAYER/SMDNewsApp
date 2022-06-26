@@ -74,10 +74,15 @@ class LoginActivity : AppCompatActivity() {
 
         val email = _emailText!!.text.toString()
         val password = _passwordText!!.text.toString()
-        viewModel.getUsers(email,password,{error->
-            toast(this, error)
-        }){
-            toast(this, "Login...")
+        viewModel.liveError.observe(this){
+            if (it!=null){
+                _loginButton!!.isEnabled = true
+                toast(this, it)
+                viewModel.liveError.value=null
+            }
+        }
+        viewModel.getUsers(email,password){
+//            toast(this, "Login...")
             onLoginSuccess()
         }
 

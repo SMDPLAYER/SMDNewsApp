@@ -1,10 +1,7 @@
 package uz.smd.newsapp.auth
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,8 +37,8 @@ class AuthViewModel @Inject constructor(
             }
         }
     }
-
-    fun getUsers(email:String,password:String,error: (String) -> Unit, loginSuccess: () -> Unit) {
+val liveError=MutableLiveData<String?>()
+    fun getUsers(email:String,password:String, loginSuccess: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             newsDatabase.usersDao().getNewsFromDatabase().value.let { list ->
                 var userNotFound = true
@@ -55,9 +52,9 @@ class AuthViewModel @Inject constructor(
                     }
                 }
                 if (userNotFound)
-                    error("User Not Found")
+                    liveError.postValue("User Not Found")
                 else  if (checkPassword)
-                error("Check Password")
+                    liveError.postValue("Check Password")
 
             }
         }
